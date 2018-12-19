@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login() {
   return request({
-    url: '/user/login',
+    url: '/users/login',
     method: 'post',
     data: {
-      username,
-      password
+      email: '104079381@qq.com',
+      password: 'asd123456'
     }
   })
 }
