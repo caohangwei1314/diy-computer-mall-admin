@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column label="名称">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="类别" width="110" align="center">
@@ -49,7 +49,7 @@
       <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row,'deleted')">删除
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -90,16 +90,16 @@ export default {
         desc: 'desc'
       },
       productClasses: [
-        { key: '1', display_name: '机箱' },
-        { key: '2', display_name: 'CPU' },
-        { key: '3', display_name: '散热器' },
-        { key: '4', display_name: '显卡' },
-        { key: '5', display_name: '机械硬盘' },
-        { key: '6', display_name: '显示器' },
-        { key: '7', display_name: '主板' },
-        { key: '8', display_name: '电源' },
-        { key: '9', display_name: '内存' },
-        { key: '10', display_name: '固态硬盘' }
+        { key: '1', routerName: 'chassis', display_name: '机箱' },
+        { key: '2', routerName: 'cpu', display_name: 'CPU' },
+        { key: '3', routerName: 'sink', display_name: '散热器' },
+        { key: '4', routerName: 'graphics', display_name: '显卡' },
+        { key: '5', routerName: 'mechanical', display_name: '机械硬盘' },
+        { key: '6', routerName: 'monitor', display_name: '显示器' },
+        { key: '7', routerName: 'board', display_name: '主板' },
+        { key: '8', routerName: 'power', display_name: '电源' },
+        { key: '9', routerName: 'ram', display_name: '内存' },
+        { key: '10', routerName: 'ssd', display_name: '固态硬盘' }
       ],
       orderByClass: [
         { key: 'pk_id', display_name: '编号' },
@@ -135,12 +135,22 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.page = val
       this.getProducts()
+    },
+    handleCreate() {
+      this.$router.push({ name: 'ProductsUpload' })
+    },
+    handleUpdate(row) {
+      this.$router.push({ path: '/products/detail/' + this.productClasses[row.classId - 1].routerName, query: { id: row.pkId }})
+    },
+    handleDelete(row) {
+      products.deleteByPkId(row.pkId)
+        .then(res => {
+          console.log(res)
+          this.$message.error('删除成功!')
+          this.getProducts()
+        })
     }
   }
 }
 </script>
-
-<style lang="sass" scoped>
-#app
-</style>
 

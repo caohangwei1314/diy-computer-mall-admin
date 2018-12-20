@@ -14,3 +14,39 @@ export function query(listQuery) {
     }
   })
 }
+
+export function deleteByPkId(productId) {
+  return request({
+    url: '/products/remove',
+    method: 'delete',
+    params: {
+      id: productId
+    }
+  })
+}
+
+export function queryDetail(productId) {
+  return request({
+    url: '/products',
+    method: 'get',
+    params: {
+      id: productId
+    }
+  })
+}
+
+export function upload(className, data) {
+  return request({
+    url: '/products/' + className,
+    method: 'post',
+    data
+  })
+}
+
+export function update(className, data) {
+  return request({
+    url: '/products/' + className,
+    method: 'put',
+    data
+  })
+}

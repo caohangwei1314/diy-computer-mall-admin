@@ -28,7 +28,6 @@ const user = {
     // 登录
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        console.log(login)
         login().then(response => {
           console.log(response)
           const data = response
