@@ -30,7 +30,7 @@
             </el-form-item>
           </div>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">{{ route==='update'? '修改':'立即创建' }}</el-button>
             <el-button @click="onCancel">重置</el-button>
           </el-form-item>
         </div>
@@ -116,8 +116,13 @@ export default {
       dataUrl: ''
     }
   },
+  computed: {
+    route() {
+      return this.$route.path.split('/')[2]
+    }
+  },
   created() {
-    if (this.$route.path.split('/')[2] === 'detail') {
+    if (this.$route.path.split('/')[2] === 'update') {
       products.queryDetail(this.$route.query.id)
         .then(res => {
           console.log(res)
@@ -137,12 +142,16 @@ export default {
       this.form.image = this.croppa.generateDataUrl()
     },
     onSubmit() {
-      console.log(this.form)
       const path = this.$route.path.split('/')[2]
       const className = this.$route.path.split('/')[3]
       products[path](className, this.form)
         .then(res => {
-          console.log(res)
+          this.$notify({
+            title: '成功',
+            message: '修改/创建商品成功！',
+            type: 'success'
+          })
+          setTimeout(this.$router.push({ name: 'ProductsManagement' }), 5000)
         })
     },
     onCancel() {

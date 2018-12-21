@@ -11,11 +11,12 @@
       <el-select v-model="listQuery.desc" placeholder="排序规则" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in descClass" :key="item.key" :label="item.display_name" :value="item.key"/>
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">增加</el-button>
     </div>
 
     <el-table
+      v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
       border
@@ -109,7 +110,8 @@ export default {
       descClass: [
         { key: 'asc', display_name: '升序' },
         { key: 'desc', display_name: '降序' }
-      ]
+      ],
+      listLoading: true
     }
   },
   created() {
@@ -117,11 +119,13 @@ export default {
   },
   methods: {
     getProducts() {
+      this.listLoading = true
       products.query(this.listQuery)
         .then(res => {
           const data = res.data
           this.list = data.list
           this.total = data.totalCount
+          this.listLoading = false
         })
     },
     handleFilter() {
@@ -140,7 +144,7 @@ export default {
       this.$router.push({ name: 'ProductsUpload' })
     },
     handleUpdate(row) {
-      this.$router.push({ path: '/products/detail/' + this.productClasses[row.classId - 1].routerName, query: { id: row.pkId }})
+      this.$router.push({ path: '/products/update/' + this.productClasses[row.classId - 1].routerName, query: { id: row.pkId }})
     },
     handleDelete(row) {
       products.deleteByPkId(row.pkId)

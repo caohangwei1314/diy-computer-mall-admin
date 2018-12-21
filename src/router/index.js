@@ -55,7 +55,7 @@ export const constantRouterMap = [
     path: '/products',
     component: Layout,
     redirect: '/products/management',
-    name: 'ProductsManagement',
+    name: 'Products',
     meta: { title: '商品管理', icon: 'form' },
     children: [
       {
@@ -144,7 +144,7 @@ export const constantRouterMap = [
         ]
       },
       {
-        path: 'detail',
+        path: 'update',
         name: 'ProductsDetail',
         hidden: true,
         component: () => import('@/views/products-management/detail'),

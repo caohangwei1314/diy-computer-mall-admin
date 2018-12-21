@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="form" label-width="80px">
       <el-form-item label="商品类别">
-        <el-select v-model="className" :disabled="showSelectList" placeholder="请选择" @change="selectRouter">
+        <el-select v-model="selectName" :disabled="showSelectList" placeholder="请选择" @change="selectRouter">
           <el-option
             v-for="item in productClasses"
             :key="item.key"
@@ -12,9 +12,7 @@
         </el-select>
       </el-form-item>
       <hr style="border:none;border-top:1px solid #C0C4CC">
-      <keep-alive>
-        <router-view/>
-      </keep-alive>
+      <router-view/>
     </el-form>
   </div>
 </template>
@@ -35,25 +33,36 @@ export default {
         { key: 'power', display_name: '电源' },
         { key: 'ram', display_name: '内存' },
         { key: 'ssd', display_name: '固态硬盘' }
-      ]
+      ],
+      selectName: null
     }
   },
   computed: {
     showSelectList() {
-      return this.$route.path.split('/')[2] === 'detail'
+      return this.$route.path.split('/')[2] === 'update'
     },
     className() {
-      if (this.$route.path.split('/')[2] === 'detail' || this.$route.path.split('/')[2] === 'upload') {
+      if (this.$route.path.split('/')[2] === 'update' || this.$route.path.split('/')[2] === 'upload') {
         return this.$route.path.split('/')[3]
       }
       return null
     }
   },
+  watch: {
+    $route() {
+      if (this.$route.path.split('/')[2] === 'update' || this.$route.path.split('/')[2] === 'upload') {
+        this.selectName = this.$route.path.split('/')[3]
+      }
+    }
+  },
+  created() {
+    this.selectName = this.$route.path.split('/')[3]
+  },
   methods: {
     selectRouter() {
       const path = this.$route.path.split('/')[2]
-      const className = this.$route.path.split('/')[3]
-      this.$router.push({ path: '/products/' + path + '/' + className })
+      console.log(path, this.selectName)
+      this.$router.push({ path: '/products/' + path + '/' + this.selectName })
     }
   }
 }
