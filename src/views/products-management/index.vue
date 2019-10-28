@@ -24,27 +24,27 @@
       highlight-current-row>
       <el-table-column align="center" label="编号" width="95">
         <template slot-scope="scope">
-          {{ scope.row.pkId }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
       <el-table-column label="名称">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span>
+          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.goodsName }}</span>
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="类别" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag>{{ productClasses[scope.row.classId-1].display_name }}</el-tag>
+          <el-tag>{{ scope.row.goodsCat.catName }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="价格" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <span>{{ scope.row.basicPrice }}</span>
         </template>
       </el-table-column>
       <el-table-column label="销售量" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.salesNumber }}</span>
+          <span>{{ scope.row.salesNum }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
@@ -122,8 +122,9 @@ export default {
       this.listLoading = true
       products.query(this.listQuery)
         .then(res => {
-          const data = res.data
-          this.list = data.list
+          const data = res.data.data
+          console.log(data)
+          this.list = data
           this.total = data.totalCount
           this.listLoading = false
         })
@@ -144,7 +145,7 @@ export default {
       this.$router.push({ name: 'ProductsUpload' })
     },
     handleUpdate(row) {
-      this.$router.push({ path: '/products/update/' + this.productClasses[row.classId - 1].routerName, query: { id: row.pkId }})
+      this.$router.push({ path: '/products/update/graphics', query: { id: row.id }})
     },
     handleDelete(row) {
       products.deleteByPkId(row.pkId)

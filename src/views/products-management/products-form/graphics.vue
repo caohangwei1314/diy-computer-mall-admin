@@ -4,8 +4,8 @@
       <div style="display:flex">
         <div>
           <el-card :body-style="{ padding: '0px' }" style="width:300px;">
-            <img v-if="(form.image==='' || !form.image)" src="../../../assets/otherImages/white.png" width="300px" height="300px">
-            <img v-else :src="form.image" width="300px" height="300px">
+            <img v-if="(form.image==='' || !form.goodsImgs)" src="../../../assets/otherImages/white.png" width="300px" height="300px">
+            <img v-else :src="'https://pinuoc.oss-cn-hangzhou.aliyuncs.com/' + form.goodsImgs" width="300px" height="300px">
             <div style="padding: 14px;">
               <el-button type="primary" style="width:265px" class="button" @click="selectImageDialog">选择图片</el-button>
             </div>
@@ -14,10 +14,10 @@
         <div>
           <div style="display:flex;margin-bottom:40px;flex-wrap:wrap">
             <el-form-item label="名称">
-              <el-input v-model="form.name" style="width:555px"/>
+              <el-input v-model="form.goodsName" style="width:555px"/>
             </el-form-item>
             <el-form-item label="价格">
-              <el-input v-model="form.price" style="width:220px"/>
+              <el-input v-model="form.basicPrice" style="width:220px"/>
             </el-form-item>
             <el-form-item label="评分">
               <el-input v-model="form.score" style="width:220px"/>
@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       form: {
-        name: '', // 名称
+        goodsName: '', // 名称
         vendor: '', // 显卡厂商
         chip: '', // 显卡芯片
         series: '', // 显卡芯片系列
@@ -85,8 +85,8 @@ export default {
         ioInterface: '', // I/O接口
         powerInterface: '', // 电源接口
         score: '', // 评分
-        image: '', // 图片
-        price: ''// 价格
+        goodsImgs: '', // 图片
+        basicPrice: ''// 价格
       },
       keyAndName: [
         { key: 'vendor', name: '显卡厂商' },

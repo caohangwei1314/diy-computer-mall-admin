@@ -29,8 +29,9 @@ const user = {
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login().then(response => {
-          console.log(response)
-          const data = response
+          console.log(123)
+          console.log(response.data)
+          const data = response.data.data
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()

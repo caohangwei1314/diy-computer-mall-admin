@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://192.168.10.105:8081', // api 的 base_url
+  baseURL: 'http://localhost:8080', // api 的 base_url
   timeout: 500000 // 请求超时时间
 })
 
@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+      config.headers['x-access-token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     return config
   },

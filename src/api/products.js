@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function query(listQuery) {
   return request({
-    url: '/products',
+    url: '/goods/admin/list',
     method: 'post',
     data: {
       classId: listQuery.classId,
@@ -27,11 +27,8 @@ export function deleteByPkId(productId) {
 
 export function queryDetail(productId) {
   return request({
-    url: '/products',
-    method: 'get',
-    params: {
-      id: productId
-    }
+    url: '/goods/detail/' + productId,
+    method: 'get'
   })
 }
 

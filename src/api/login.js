@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 export function login() {
   return request({
-    url: '/users/login',
+    url: '/admin/login',
     method: 'post',
     data: {
-      email: '104079381@qq.com',
-      password: 'asd123456'
+      username: 'admin',
+      password: 'admin'
     }
   })
 }

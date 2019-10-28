@@ -176,7 +176,7 @@ export const constantRouterMap = [
             name: 'GraphicsDetail',
             hidden: true,
             component: () => import('@/views/products-management/products-form/graphics'),
-            meta: { title: '显卡', icon: 'form' }
+            meta: { title: '详情', icon: 'form' }
           },
           {
             path: 'mechanical',
